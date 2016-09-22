@@ -43,14 +43,13 @@ namespace ShoppingList.Controllers
         // GET: ViewItem/View
         public ActionResult ViewItem(int? id, string search)
         {
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var items = from s in db.ShoppingListItems
                         select s;
-            
 
             ViewBag.ShoppingListId = id;
             ViewBag.ListTitle = db.ShoppingLists.Find(id).Name;
