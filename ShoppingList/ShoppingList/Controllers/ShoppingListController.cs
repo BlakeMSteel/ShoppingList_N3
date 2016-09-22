@@ -41,7 +41,7 @@ namespace ShoppingList.Controllers
         //adding ViewItem to ShoppingListController
 
         // GET: ViewItem/View
-        public ActionResult ViewItem(int id, string search)
+        public ActionResult ViewItem(int? id, string search)
         {
 
             if (id == null)
@@ -50,15 +50,19 @@ namespace ShoppingList.Controllers
             }
             var items = from s in db.ShoppingListItems
                         select s;
+            
+
+            ViewBag.ShoppingListId = id;
+            ViewBag.ListTitle = db.ShoppingLists.Find(id).Name;
+            ViewBag.ShoppingListColor = db.ShoppingLists.Find(id).Color;
+
+            items = items.Where(s => s.ShoppingListId == id);
             if (!String.IsNullOrEmpty(search))
             {
                 items = items.Where(s => s.Content.Contains(search));
             }
 
-            ViewBag.ShoppingListId = id;
-            ViewBag.ListTitle = db.ShoppingLists.Find(id).Name;
-            ViewBag.ShoppingListColor = db.ShoppingLists.Find(id).Color; 
-            return View(items.Where(s => s.ShoppingListId == id));
+            return View(items);
 
         }
 
