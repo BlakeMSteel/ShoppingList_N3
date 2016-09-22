@@ -111,6 +111,12 @@ namespace ShoppingList.Controllers
             return RedirectToAction("ViewItem", "ShoppingList", new {id = shoppingListItem.ShoppingListId});
         }
 
+        public ActionResult ItemLookUp(string item)
+        {
+            var items = db.ShoppingListItems.Where(c => c.Content.Contains(item));
+            return View(items.ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
